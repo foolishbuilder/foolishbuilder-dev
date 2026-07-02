@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>foolishbuilder.dev</title>
+  </head>
+  <body>
+    <!-- ===== Menu bar ===== -->
+    <ul role="menu-bar" class="menu-bar">
+      <li role="menu-item" tabindex="0" aria-haspopup="true">
+        <span class="apple"></span>
+        <ul role="menu">
+          <li role="menu-item"><button type="button" data-open-window="about-box">About This Developer…</button></li>
+        </ul>
+      </li>
+      <li role="menu-item" tabindex="0" aria-haspopup="true">
+        File
+        <ul role="menu">
+          <li role="menu-item"><button type="button" data-open-window="projects-window">Projects</button></li>
+          <li role="menu-item"><a href="https://github.com/foolishbuilder" target="_blank" rel="noopener">View Source on GitHub</a></li>
+        </ul>
+      </li>
+      <li role="menu-item" tabindex="0" aria-haspopup="true">
+        Special
+        <ul role="menu">
+          <li role="menu-item"><button type="button" data-restart>Restart</button></li>
+        </ul>
+      </li>
+      <li class="menu-bar__clock" id="menu-clock" aria-hidden="true"></li>
+    </ul>
+
+    <main>
+      <!-- ===== Desktop icons ===== -->
+      <div class="desktop-icons">
+        <button class="desktop-icon" data-window="about-box" type="button">
+          <span class="desktop-icon__art"><svg viewBox="0 0 26 30" width="26" height="30" aria-hidden="true"><rect x="3" y="2" width="20" height="26" rx="2" fill="#fff" stroke="#000" stroke-width="2"/><rect x="6" y="5" width="14" height="10" fill="#fff" stroke="#000" stroke-width="1.5"/><rect x="13" y="20" width="7" height="2" fill="#000"/><circle cx="9" cy="24" r="1.3" fill="#000"/></svg></span>
+          <span class="desktop-icon__label">About</span>
+        </button>
+        <button class="desktop-icon" data-window="projects-window" type="button">
+          <span class="desktop-icon__art"><svg viewBox="0 0 32 26" width="32" height="26" aria-hidden="true"><path d="M2 6H12L15 9H30V23H2Z" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="round"/></svg></span>
+          <span class="desktop-icon__label">Projects</span>
+        </button>
+        <button class="desktop-icon" data-window="activity-window" type="button">
+          <span class="desktop-icon__art"><svg viewBox="0 0 32 30" width="32" height="30" aria-hidden="true"><rect x="3" y="3" width="26" height="18" fill="#fff" stroke="#000" stroke-width="2"/><polyline points="7,15 12,15 15,9 19,17 22,12 25,12" fill="none" stroke="#000" stroke-width="1.5"/><rect x="13" y="21" width="6" height="4" fill="#fff" stroke="#000" stroke-width="2"/><rect x="8" y="25" width="16" height="3" fill="#fff" stroke="#000" stroke-width="2"/></svg></span>
+          <span class="desktop-icon__label">Activity Monitor</span>
+        </button>
+      </div>
+
+      <!-- ===== Windows ===== -->
+      <div class="window-layer">
+
+        <!-- About: opens on load, carries the manifesto -->
+        <div class="window floating-window about-window" id="about-box">
+          <div class="title-bar">
+            <button aria-label="Close" class="close" data-close-window></button>
+            <h1 class="title">Pat Faint</h1>
+            <button aria-label="Resize" class="resize"></button>
+          </div>
+          <div class="separator"></div>
+          <div class="window-pane about-pane">
+            <p class="about__role">Aspiring Software Developer</p>
+            <figure class="about__quote">
+              <blockquote><p>Stay hungry. Stay foolish.</p></blockquote>
+              <figcaption>Steve Jobs</figcaption>
+            </figure>
+            <p class="about__lede">I build tools I actually use — properly, by hand, one commit at a time.</p>
+            <button class="btn" data-open-window="projects-window">See what I'm building</button>
+          </div>
+        </div>
+
+        <!-- Projects: a folder of repo files -->
+        <div class="window floating-window" id="projects-window" hidden>
+          <div class="title-bar">
+            <button aria-label="Close" class="close" data-close-window></button>
+            <h1 class="title">Projects</h1>
+            <button aria-label="Resize" disabled class="hidden"></button>
+          </div>
+          <div class="separator"></div>
+          <div class="window-pane folder-pane">
+            <button class="file-icon" type="button" data-window="proj-foolishbuilder-dev">
+              <span class="file-icon__art"><svg viewBox="0 0 22 28" width="22" height="28" aria-hidden="true"><path d="M3 1h11l5 5v21H3z" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="round"/><path d="M14 1v5h5" fill="none" stroke="#000" stroke-width="2"/></svg></span>
+              <span class="file-icon__label">foolishbuilder.dev</span>
+            </button>
+            <button class="file-icon" type="button" data-window="proj-rob">
+              <span class="file-icon__art"><svg viewBox="0 0 22 28" width="22" height="28" aria-hidden="true"><path d="M3 1h11l5 5v21H3z" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="round"/><path d="M14 1v5h5" fill="none" stroke="#000" stroke-width="2"/></svg></span>
+              <span class="file-icon__label">rob</span>
+            </button>
+            <button class="file-icon" type="button" data-window="proj-rob-docs">
+              <span class="file-icon__art"><svg viewBox="0 0 22 28" width="22" height="28" aria-hidden="true"><path d="M3 1h11l5 5v21H3z" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="round"/><path d="M14 1v5h5" fill="none" stroke="#000" stroke-width="2"/></svg></span>
+              <span class="file-icon__label">rob-docs-and-terms</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Project windows: README + live stats, fetched on first open -->
+        <div class="window floating-window project-window" id="proj-foolishbuilder-dev" data-repo="foolishbuilder-dev" hidden>
+          <div class="title-bar">
+            <button aria-label="Close" class="close" data-close-window></button>
+            <h1 class="title">foolishbuilder.dev</h1>
+            <button aria-label="Resize" disabled class="hidden"></button>
+          </div>
+          <div class="separator"></div>
+          <div class="window-pane project-pane">
+            <div class="project-readme" data-readme>Loading…</div>
+            <hr>
+            <p class="project-stats" data-stats></p>
+            <a class="btn" data-repo-link target="_blank" rel="noopener">View Source</a>
+          </div>
+        </div>
+
+        <div class="window floating-window project-window" id="proj-rob" data-repo="rob" hidden>
+          <div class="title-bar">
+            <button aria-label="Close" class="close" data-close-window></button>
+            <h1 class="title">rob</h1>
+            <button aria-label="Resize" disabled class="hidden"></button>
+          </div>
+          <div class="separator"></div>
+          <div class="window-pane project-pane">
+            <div class="project-readme" data-readme>Loading…</div>
+            <hr>
+            <p class="project-stats" data-stats></p>
+            <a class="btn" data-repo-link target="_blank" rel="noopener">View Source</a>
+          </div>
+        </div>
+
+        <div class="window floating-window project-window" id="proj-rob-docs" data-repo="rob-docs-and-terms" hidden>
+          <div class="title-bar">
+            <button aria-label="Close" class="close" data-close-window></button>
+            <h1 class="title">rob-docs-and-terms</h1>
+            <button aria-label="Resize" disabled class="hidden"></button>
+          </div>
+          <div class="separator"></div>
+          <div class="window-pane project-pane">
+            <div class="project-readme" data-readme>Loading…</div>
+            <hr>
+            <p class="project-stats" data-stats></p>
+            <a class="btn" data-repo-link target="_blank" rel="noopener">View Source</a>
+          </div>
+        </div>
+
+        <!-- Activity Monitor: live GitHub vitals -->
+        <div class="window floating-window activity-window" id="activity-window" hidden>
+          <div class="title-bar">
+            <button aria-label="Close" class="close" data-close-window></button>
+            <h1 class="title">Activity Monitor</h1>
+            <button aria-label="Resize" disabled class="hidden"></button>
+          </div>
+          <div class="separator"></div>
+          <div class="window-pane activity-pane">
+            <p class="activity-summary" data-activity-summary>Reading GitHub…</p>
+            <hr>
+            <h2 class="activity-heading">Recent Activity</h2>
+            <ul class="activity-feed" data-activity-feed></ul>
+            <h2 class="activity-heading">Languages Loaded</h2>
+            <div class="activity-langs" data-activity-langs></div>
+            <hr>
+            <a class="btn" href="https://github.com/foolishbuilder" target="_blank" rel="noopener">Open GitHub</a>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
