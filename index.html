@@ -1,168 +1,968 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="icon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>foolishbuilder.dev</title>
-  </head>
-  <body>
-    <!-- ===== Menu bar ===== -->
-    <ul role="menu-bar" class="menu-bar">
-      <li role="menu-item" tabindex="0" aria-haspopup="true">
-        <span class="apple"></span>
-        <ul role="menu">
-          <li role="menu-item"><button type="button" data-open-window="about-box">About This Developer…</button></li>
-        </ul>
-      </li>
-      <li role="menu-item" tabindex="0" aria-haspopup="true">
-        File
-        <ul role="menu">
-          <li role="menu-item"><button type="button" data-open-window="projects-window">Projects</button></li>
-          <li role="menu-item"><a href="https://github.com/foolishbuilder" target="_blank" rel="noopener">View Source on GitHub</a></li>
-        </ul>
-      </li>
-      <li role="menu-item" tabindex="0" aria-haspopup="true">
-        Special
-        <ul role="menu">
-          <li role="menu-item"><button type="button" data-restart>Restart</button></li>
-        </ul>
-      </li>
-      <li class="menu-bar__clock" id="menu-clock" aria-hidden="true"></li>
-    </ul>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="Pat Faint — Software Developer. I build tools I actually use."/>
+  <meta name="theme-color" content="#fefefe"/>
+  <meta property="og:title" content="foolishbuilder.dev"/>
+  <meta property="og:description" content="Pat Faint — I build tools I actually use, one commit at a time."/>
+  <meta property="og:type" content="website"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1f6e0;&#xfe0f;</text></svg>"/>
+  <title>foolishbuilder.dev</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Hanken+Grotesk:wght@100..900&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous"/>
+  <style>
+    /* ═══════════════════════════════════════════════════════════════════════
+       DESIGN TOKENS
+       ═══════════════════════════════════════════════════════════════════════ */
+    :root {
+      --pink: #ff6b9d;
+      --pink-light: #fff0f5;
+      --purple: #c084fc;
+      --purple-deep: #a855f7;
+      --purple-light: #f5f0ff;
+      --orange: #fb923c;
+      --orange-light: #fff7ed;
+      --teal: #2dd4bf;
+      --teal-light: #f0fdfa;
+      --blue: #60a5fa;
+      --blue-light: #eff6ff;
+      --yellow: #fbbf24;
+      --yellow-light: #fffbeb;
+      --green: #4ade80;
+      --green-light: #f0fdf4;
 
-    <main>
-      <!-- ===== Desktop icons ===== -->
-      <div class="desktop-icons">
-        <button class="desktop-icon" data-window="about-box" type="button">
-          <span class="desktop-icon__art"><svg viewBox="0 0 26 30" width="26" height="30" aria-hidden="true"><rect x="3" y="2" width="20" height="26" rx="2" fill="#fff" stroke="#000" stroke-width="2"/><rect x="6" y="5" width="14" height="10" fill="#fff" stroke="#000" stroke-width="1.5"/><rect x="13" y="20" width="7" height="2" fill="#000"/><circle cx="9" cy="24" r="1.3" fill="#000"/></svg></span>
-          <span class="desktop-icon__label">About</span>
-        </button>
-        <button class="desktop-icon" data-window="projects-window" type="button">
-          <span class="desktop-icon__art"><svg viewBox="0 0 32 26" width="32" height="26" aria-hidden="true"><path d="M2 6H12L15 9H30V23H2Z" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="round"/></svg></span>
-          <span class="desktop-icon__label">Projects</span>
-        </button>
-        <button class="desktop-icon" data-window="activity-window" type="button">
-          <span class="desktop-icon__art"><svg viewBox="0 0 32 30" width="32" height="30" aria-hidden="true"><rect x="3" y="3" width="26" height="18" fill="#fff" stroke="#000" stroke-width="2"/><polyline points="7,15 12,15 15,9 19,17 22,12 25,12" fill="none" stroke="#000" stroke-width="1.5"/><rect x="13" y="21" width="6" height="4" fill="#fff" stroke="#000" stroke-width="2"/><rect x="8" y="25" width="16" height="3" fill="#fff" stroke="#000" stroke-width="2"/></svg></span>
-          <span class="desktop-icon__label">Activity Monitor</span>
-        </button>
+      --bg: #fefefe;
+      --bg-soft: #faf8ff;
+      --bg-hero: linear-gradient(160deg, #faf8ff 0%, #fff0f5 30%, #f0fdfa 60%, #eff6ff 100%);
+      --surface: #ffffff;
+      --text: #1e1b4b;
+      --text-secondary: #374151;
+      --text-muted: #6b7280;
+      --text-faint: #9ca3af;
+      --border: #e5e7eb;
+      --border-light: #f3f4f6;
+
+      --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
+      --shadow-xl: 0 16px 48px rgba(0,0,0,0.10), 0 8px 16px rgba(0,0,0,0.06);
+      --shadow-glow-pink: 0 8px 32px rgba(255,107,157,0.15);
+      --shadow-glow-purple: 0 8px 32px rgba(192,132,252,0.15);
+      --shadow-glow-teal: 0 8px 32px rgba(45,212,191,0.15);
+      --shadow-glow-blue: 0 8px 32px rgba(96,165,250,0.15);
+      --shadow-glow-orange: 0 8px 32px rgba(251,146,60,0.15);
+
+      --radius-sm: 12px;
+      --radius: 20px;
+      --radius-lg: 28px;
+      --radius-full: 9999px;
+
+      --font-heading: 'Fraunces', Georgia, serif;
+      --font-body: 'Hanken Grotesk', 'Helvetica Neue', sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       RESET & BASE
+       ═══════════════════════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    ::selection { background: var(--purple); color: white; }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--pink), var(--purple));
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--purple-deep); }
+
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible, button:focus-visible {
+      outline: 3px solid var(--purple);
+      outline-offset: 3px;
+      border-radius: 8px;
+    }
+    img { max-width: 100%; display: block; }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       GRAIN OVERLAY
+       ═══════════════════════════════════════════════════════════════════════ */
+    .grain {
+      position: fixed; inset: 0; z-index: 99999; pointer-events: none;
+      opacity: 0.018;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px 256px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       FLOATING BLOBS
+       ═══════════════════════════════════════════════════════════════════════ */
+    .blobs { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+
+    .blob {
+      position: absolute;
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      filter: blur(60px);
+      opacity: 0.18;
+      will-change: transform;
+    }
+
+    .blob--1 {
+      width: 600px; height: 600px;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      top: -180px; right: -120px;
+      animation: blobDrift1 24s ease-in-out infinite;
+    }
+    .blob--2 {
+      width: 500px; height: 500px;
+      background: linear-gradient(135deg, var(--teal), var(--blue));
+      top: 35%; left: -160px;
+      animation: blobDrift2 28s ease-in-out infinite;
+    }
+    .blob--3 {
+      width: 450px; height: 450px;
+      background: linear-gradient(135deg, var(--orange), var(--yellow));
+      bottom: -120px; right: 15%;
+      animation: blobDrift3 22s ease-in-out infinite;
+    }
+    .blob--4 {
+      width: 380px; height: 380px;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      top: 55%; right: -80px;
+      animation: blobDrift1 20s ease-in-out infinite reverse;
+    }
+    .blob--5 {
+      width: 320px; height: 320px;
+      background: linear-gradient(135deg, var(--green), var(--teal));
+      bottom: 25%; left: 8%;
+      animation: blobDrift2 30s ease-in-out infinite reverse;
+    }
+    .blob--6 {
+      width: 280px; height: 280px;
+      background: linear-gradient(135deg, var(--pink), var(--orange));
+      top: 15%; left: 30%;
+      animation: blobDrift3 26s ease-in-out infinite;
+      opacity: 0.12;
+    }
+
+    @keyframes blobDrift1 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+      25% { transform: translate(40px, -50px) rotate(90deg) scale(1.08); border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%; }
+      50% { transform: translate(-30px, 30px) rotate(180deg) scale(0.95); border-radius: 70% 30% 50% 50% / 40% 60% 40% 60%; }
+      75% { transform: translate(20px, -20px) rotate(270deg) scale(1.05); border-radius: 40% 60% 60% 40% / 50% 50% 50% 50%; }
+    }
+    @keyframes blobDrift2 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%; }
+      33% { transform: translate(-50px, 40px) rotate(-120deg) scale(1.06); border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+      66% { transform: translate(40px, -35px) rotate(-240deg) scale(1.1); border-radius: 60% 40% 40% 60% / 50% 50% 50% 50%; }
+    }
+    @keyframes blobDrift3 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); border-radius: 40% 60% 60% 40% / 50% 50% 50% 50%; }
+      50% { transform: translate(50px, -60px) rotate(180deg) scale(1.12); border-radius: 70% 30% 30% 70% / 40% 60% 60% 40%; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       SCROLL REVEAL SYSTEM
+       ═══════════════════════════════════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px) scale(0.96);
+      transition: opacity 0.7s var(--ease-smooth), transform 0.7s var(--ease-smooth);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .reveal-d1 { transition-delay: 0.08s; }
+    .reveal-d2 { transition-delay: 0.16s; }
+    .reveal-d3 { transition-delay: 0.24s; }
+    .reveal-d4 { transition-delay: 0.32s; }
+    .reveal-d5 { transition-delay: 0.40s; }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       HERO SECTION
+       ═══════════════════════════════════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 24px 80px;
+      background: var(--bg-hero);
+      overflow: hidden;
+    }
+    .hero__content { position: relative; z-index: 1; max-width: 680px; }
+
+    .hero__wave {
+      font-size: 72px;
+      display: inline-block;
+      animation: waveHand 2.5s ease-in-out infinite;
+      transform-origin: 70% 70%;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.06));
+    }
+    @keyframes waveHand {
+      0%, 60%, 100% { transform: rotate(0deg); }
+      10% { transform: rotate(14deg); }
+      20% { transform: rotate(-8deg); }
+      30% { transform: rotate(14deg); }
+      40% { transform: rotate(-4deg); }
+      50% { transform: rotate(10deg); }
+    }
+
+    .hero__greeting {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      color: var(--purple-deep);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+      display: inline-block;
+      background: var(--purple-light);
+      padding: 4px 16px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(168, 85, 247, 0.15);
+    }
+
+    .hero__name {
+      font-family: var(--font-heading);
+      font-size: clamp(3.2rem, 9vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--pink) 0%, var(--purple-deep) 40%, var(--blue) 80%, var(--teal) 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 8s ease-in-out infinite;
+    }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .hero__role {
+      font-family: var(--font-body);
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-bottom: 28px;
+    }
+
+    .hero__tagline {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: var(--text-muted);
+      max-width: 480px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+
+    /* Quote Card */
+    .hero__quote-card {
+      position: relative;
+      display: inline-block;
+      padding: 24px 32px;
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-light);
+      max-width: 420px;
+      transition: transform 0.4s var(--ease-bounce), box-shadow 0.4s ease;
+    }
+    .hero__quote-card:hover {
+      transform: translateY(-6px) rotate(-1.5deg);
+      box-shadow: var(--shadow-xl), var(--shadow-glow-purple);
+    }
+    .hero__quote-card::before {
+      content: '\u201C';
+      position: absolute;
+      top: -12px; left: 20px;
+      font-family: var(--font-heading);
+      font-size: 5rem;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0.5;
+    }
+    .hero__quote-card::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 20px; right: 20px;
+      height: 4px;
+      border-radius: 0 0 var(--radius) var(--radius);
+      background: linear-gradient(90deg, var(--pink), var(--purple), var(--blue));
+    }
+    .hero__quote-text {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 600;
+      font-style: italic;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .hero__quote-author {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .hero__quote-author::before {
+      content: '\u2014 ';
+      color: var(--purple);
+    }
+
+    /* Scroll indicator */
+    .hero__scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-faint);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      animation: scrollBounce 2.5s var(--ease-smooth) infinite;
+      cursor: pointer;
+      z-index: 1;
+      transition: color 0.2s ease;
+    }
+    .hero__scroll:hover { color: var(--purple); }
+    .hero__scroll-dot {
+      width: 24px; height: 40px;
+      border-radius: 12px;
+      border: 2px solid currentColor;
+      position: relative;
+      transition: border-color 0.2s ease;
+    }
+    .hero__scroll-dot::after {
+      content: '';
+      position: absolute;
+      top: 6px; left: 50%;
+      transform: translateX(-50%);
+      width: 4px; height: 8px;
+      border-radius: 2px;
+      background: currentColor;
+      animation: scrollDotPulse 2.5s var(--ease-smooth) infinite;
+    }
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+    @keyframes scrollDotPulse {
+      0%, 100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      50% { opacity: 0.3; transform: translateX(-50%) translateY(10px); }
+    }
+
+    /* Floating decorative shapes in hero */
+    .hero__shape {
+      position: absolute;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+    .hero__shape--1 {
+      width: 60px; height: 60px;
+      border: 3px solid var(--pink);
+      border-radius: 16px;
+      top: 18%; left: 8%;
+      animation: shapeFloat 6s ease-in-out infinite;
+      transform: rotate(15deg);
+    }
+    .hero__shape--2 {
+      width: 40px; height: 40px;
+      background: var(--yellow);
+      border-radius: 50%;
+      top: 25%; right: 12%;
+      animation: shapeFloat 7s ease-in-out infinite reverse;
+      opacity: 0.35;
+    }
+    .hero__shape--3 {
+      width: 80px; height: 80px;
+      border: 3px solid var(--teal);
+      border-radius: 50%;
+      bottom: 22%; left: 12%;
+      animation: shapeFloat 8s ease-in-out infinite;
+    }
+    .hero__shape--4 {
+      width: 30px; height: 30px;
+      background: var(--purple);
+      border-radius: 8px;
+      bottom: 30%; right: 8%;
+      animation: shapeFloat 5s ease-in-out infinite reverse;
+      opacity: 0.3;
+      transform: rotate(45deg);
+    }
+    .hero__shape--5 {
+      width: 20px; height: 20px;
+      background: var(--orange);
+      border-radius: 50%;
+      top: 40%; left: 20%;
+      animation: shapeFloat 9s ease-in-out infinite;
+      opacity: 0.4;
+    }
+    .hero__shape--6 {
+      width: 50px; height: 50px;
+      border: 3px solid var(--blue);
+      border-radius: 12px;
+      top: 60%; right: 18%;
+      animation: shapeFloat 7s ease-in-out infinite;
+      transform: rotate(-20deg);
+      opacity: 0.35;
+    }
+    @keyframes shapeFloat {
+      0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+      50% { transform: translateY(-20px) rotate(calc(var(--r, 0deg) + 10deg)); }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       SECTION LAYOUT
+       ═══════════════════════════════════════════════════════════════════════ */
+    .section {
+      position: relative;
+      padding: 100px 24px;
+      overflow: hidden;
+    }
+    .section__inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    .section--alt { background: var(--bg-soft); }
+
+    .section__header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .section__badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--teal);
+      background: var(--teal-light);
+      padding: 4px 16px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(45, 212, 191, 0.2);
+      margin-bottom: 16px;
+      letter-spacing: 0.06em;
+    }
+    .section__title {
+      font-family: var(--font-heading);
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .section__subtitle {
+      font-family: var(--font-body);
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       PROJECT CARDS
+       ═══════════════════════════════════════════════════════════════════════ */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 640px) { .projects-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .projects-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .project-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+      color: var(--text);
+      overflow: hidden;
+      transition: transform 0.4s var(--ease-bounce),
+                  box-shadow 0.4s ease,
+                  border-color 0.3s ease;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 5px; height: 100%;
+      border-radius: var(--radius) 0 0 var(--radius);
+      transition: width 0.3s var(--ease-smooth);
+    }
+    .project-card:nth-child(7n+1)::before { background: linear-gradient(180deg, var(--pink), var(--purple)); }
+    .project-card:nth-child(7n+2)::before { background: linear-gradient(180deg, var(--purple), var(--blue)); }
+    .project-card:nth-child(7n+3)::before { background: linear-gradient(180deg, var(--teal), var(--green)); }
+    .project-card:nth-child(7n+4)::before { background: linear-gradient(180deg, var(--orange), var(--yellow)); }
+    .project-card:nth-child(7n+5)::before { background: linear-gradient(180deg, var(--blue), var(--teal)); }
+    .project-card:nth-child(7n+6)::before { background: linear-gradient(180deg, var(--yellow), var(--orange)); }
+    .project-card:nth-child(7n+7)::before { background: linear-gradient(180deg, var(--green), var(--teal)); }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+    .project-card:nth-child(7n+1)::after { background: linear-gradient(135deg, var(--pink-light), transparent 60%); }
+    .project-card:nth-child(7n+2)::after { background: linear-gradient(135deg, var(--purple-light), transparent 60%); }
+    .project-card:nth-child(7n+3)::after { background: linear-gradient(135deg, var(--teal-light), transparent 60%); }
+    .project-card:nth-child(7n+4)::after { background: linear-gradient(135deg, var(--orange-light), transparent 60%); }
+    .project-card:nth-child(7n+5)::after { background: linear-gradient(135deg, var(--blue-light), transparent 60%); }
+    .project-card:nth-child(7n+6)::after { background: linear-gradient(135deg, var(--yellow-light), transparent 60%); }
+    .project-card:nth-child(7n+7)::after { background: linear-gradient(135deg, var(--green-light), transparent 60%); }
+
+    .project-card:hover {
+      border-color: transparent;
+    }
+    .project-card:hover::before { width: 7px; }
+    .project-card:hover::after { opacity: 1; }
+
+    .project-card:nth-child(odd):hover {
+      transform: translateY(-8px) rotate(-0.8deg);
+      box-shadow: var(--shadow-xl);
+    }
+    .project-card:nth-child(even):hover {
+      transform: translateY(-8px) rotate(0.8deg);
+      box-shadow: var(--shadow-xl);
+    }
+    .project-card:nth-child(7n+1):hover { box-shadow: var(--shadow-xl), var(--shadow-glow-pink); }
+    .project-card:nth-child(7n+2):hover { box-shadow: var(--shadow-xl), var(--shadow-glow-purple); }
+    .project-card:nth-child(7n+3):hover { box-shadow: var(--shadow-xl), var(--shadow-glow-teal); }
+    .project-card:nth-child(7n+4):hover { box-shadow: var(--shadow-xl), var(--shadow-glow-orange); }
+    .project-card:nth-child(7n+5):hover { box-shadow: var(--shadow-xl), var(--shadow-glow-blue); }
+
+    .project-card__content { position: relative; z-index: 1; display: flex; flex-direction: column; flex: 1; }
+
+    .project-card__emoji {
+      font-size: 32px;
+      margin-bottom: 14px;
+      display: inline-block;
+      transition: transform 0.4s var(--ease-bounce);
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.06));
+    }
+    .project-card:hover .project-card__emoji {
+      transform: scale(1.25) rotate(-12deg);
+    }
+
+    .project-card__name {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .project-card__desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      flex: 1;
+      margin-bottom: 18px;
+    }
+
+    .project-card__meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-faint);
+      flex-wrap: wrap;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-light);
+    }
+    .project-card__lang {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .project-card__dot {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px rgba(0,0,0,0.04);
+    }
+    .project-card__stars {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--text-muted);
+    }
+    .project-card__stars i { color: var(--yellow); font-size: 11px; }
+    .project-card__time { color: var(--text-faint); }
+    .project-card__arrow {
+      margin-left: auto;
+      color: var(--text-faint);
+      font-size: 0.85rem;
+      transition: transform 0.3s var(--ease-bounce), color 0.2s ease;
+    }
+    .project-card:hover .project-card__arrow {
+      transform: translateX(4px);
+      color: var(--purple);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       LOADING & EMPTY STATES
+       ═══════════════════════════════════════════════════════════════════════ */
+    .loading-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .loading-state__spinner {
+      display: inline-block;
+      width: 40px; height: 40px;
+      border: 4px solid var(--border);
+      border-top-color: var(--purple);
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+      margin-bottom: 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-state__text {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .empty-state__emoji {
+      font-size: 56px;
+      margin-bottom: 16px;
+      display: inline-block;
+      animation: wiggle 2s ease-in-out infinite;
+    }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(5deg); }
+      75% { transform: rotate(-5deg); }
+    }
+    .empty-state__text {
+      font-family: var(--font-body);
+      font-size: 1.1rem;
+      color: var(--text-muted);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════════════════ */
+    .footer {
+      text-align: center;
+      padding: 56px 24px 48px;
+      background: var(--bg-soft);
+      border-top: 1px solid var(--border-light);
+      position: relative;
+      overflow: hidden;
+    }
+    .footer__links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .footer__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      padding: 10px 20px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: var(--shadow-xs);
+      transition: transform 0.4s var(--ease-bounce),
+                  box-shadow 0.4s ease,
+                  color 0.2s ease,
+                  border-color 0.2s ease;
+    }
+    .footer__link:hover {
+      transform: translateY(-4px) rotate(-2deg);
+      box-shadow: var(--shadow-lg), var(--shadow-glow-purple);
+      color: var(--purple-deep);
+      border-color: var(--purple);
+    }
+    .footer__link i { font-size: 1.15rem; }
+
+    .footer__copy {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-faint);
+      margin-bottom: 8px;
+    }
+    .footer__tagline {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .footer__tagline span {
+      display: inline-block;
+      transition: transform 0.3s var(--ease-bounce);
+    }
+    .footer__tagline:hover span {
+      transform: rotate(20deg) scale(1.2);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       REDUCED MOTION
+       ═══════════════════════════════════════════════════════════════════════ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+      .blob { animation: none !important; }
+      .hero__shape { animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ═══════ HERO ═══════ -->
+  <section class="hero" id="hero">
+    <div class="blobs">
+      <div class="blob blob--1"></div>
+      <div class="blob blob--2"></div>
+      <div class="blob blob--3"></div>
+    </div>
+
+    <div class="hero__shape hero__shape--1" aria-hidden="true"></div>
+    <div class="hero__shape hero__shape--2" aria-hidden="true"></div>
+    <div class="hero__shape hero__shape--3" aria-hidden="true"></div>
+    <div class="hero__shape hero__shape--4" aria-hidden="true"></div>
+    <div class="hero__shape hero__shape--5" aria-hidden="true"></div>
+    <div class="hero__shape hero__shape--6" aria-hidden="true"></div>
+
+    <div class="hero__content">
+      <div class="hero__wave reveal" aria-hidden="true">&#x1f44b;</div>
+      <span class="hero__greeting reveal reveal-d1">hey, I&#x27;m</span>
+      <h1 class="hero__name reveal reveal-d2">Pat Faint</h1>
+      <p class="hero__role reveal reveal-d3">Software Developer</p>
+      <p class="hero__tagline reveal reveal-d4">I build tools I actually use &mdash; properly, by hand, one commit at a time.</p>
+      <figure class="hero__quote-card reveal reveal-d5">
+        <blockquote class="hero__quote-text">Stay hungry. Stay foolish.</blockquote>
+        <figcaption class="hero__quote-author">Steve Jobs</figcaption>
+      </figure>
+    </div>
+
+    <a href="#projects" class="hero__scroll" aria-label="Scroll to projects">
+      <div class="hero__scroll-dot"></div>
+      <span>scroll</span>
+    </a>
+  </section>
+
+  <!-- ═══════ PROJECTS ═══════ -->
+  <section class="section section--alt" id="projects">
+    <div class="blobs">
+      <div class="blob blob--4"></div>
+      <div class="blob blob--5"></div>
+      <div class="blob blob--6"></div>
+    </div>
+    <div class="section__inner">
+      <div class="section__header">
+        <span class="section__badge reveal">&#x1f4e6; projects</span>
+        <h2 class="section__title reveal reveal-d1">Things I&#x27;ve Built</h2>
+        <p class="section__subtitle reveal reveal-d2">Public projects, shipped and maintained. Always a work in progress.</p>
       </div>
-
-      <!-- ===== Windows ===== -->
-      <div class="window-layer">
-
-        <!-- About: opens on load, carries the manifesto -->
-        <div class="window floating-window about-window" id="about-box">
-          <div class="title-bar">
-            <button aria-label="Close" class="close" data-close-window></button>
-            <h1 class="title">Pat Faint</h1>
-            <button aria-label="Resize" class="resize"></button>
-          </div>
-          <div class="separator"></div>
-          <div class="window-pane about-pane">
-            <p class="about__role">Aspiring Software Developer</p>
-            <figure class="about__quote">
-              <blockquote><p>Stay hungry. Stay foolish.</p></blockquote>
-              <figcaption>Steve Jobs</figcaption>
-            </figure>
-            <p class="about__lede">I build tools I actually use — properly, by hand, one commit at a time.</p>
-            <button class="btn" data-open-window="projects-window">See what I'm building</button>
-          </div>
+      <div class="projects-grid" id="projects-grid">
+        <div class="loading-state">
+          <div class="loading-state__spinner"></div>
+          <p class="loading-state__text">Fetching projects&hellip;</p>
         </div>
-
-        <!-- Projects: a folder of repo files -->
-        <div class="window floating-window" id="projects-window" hidden>
-          <div class="title-bar">
-            <button aria-label="Close" class="close" data-close-window></button>
-            <h1 class="title">Projects</h1>
-            <button aria-label="Resize" disabled class="hidden"></button>
-          </div>
-          <div class="separator"></div>
-          <div class="window-pane folder-pane">
-            <button class="file-icon" type="button" data-window="proj-foolishbuilder-dev">
-              <span class="file-icon__art"><svg viewBox="0 0 22 28" width="22" height="28" aria-hidden="true"><path d="M3 1h11l5 5v21H3z" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="round"/><path d="M14 1v5h5" fill="none" stroke="#000" stroke-width="2"/></svg></span>
-              <span class="file-icon__label">foolishbuilder.dev</span>
-            </button>
-            <button class="file-icon" type="button" data-window="proj-rob">
-              <span class="file-icon__art"><svg viewBox="0 0 22 28" width="22" height="28" aria-hidden="true"><path d="M3 1h11l5 5v21H3z" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="round"/><path d="M14 1v5h5" fill="none" stroke="#000" stroke-width="2"/></svg></span>
-              <span class="file-icon__label">rob</span>
-            </button>
-            <button class="file-icon" type="button" data-window="proj-rob-docs">
-              <span class="file-icon__art"><svg viewBox="0 0 22 28" width="22" height="28" aria-hidden="true"><path d="M3 1h11l5 5v21H3z" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="round"/><path d="M14 1v5h5" fill="none" stroke="#000" stroke-width="2"/></svg></span>
-              <span class="file-icon__label">rob-docs-and-terms</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Project windows: README + live stats, fetched on first open -->
-        <div class="window floating-window project-window" id="proj-foolishbuilder-dev" data-repo="foolishbuilder-dev" hidden>
-          <div class="title-bar">
-            <button aria-label="Close" class="close" data-close-window></button>
-            <h1 class="title">foolishbuilder.dev</h1>
-            <button aria-label="Resize" disabled class="hidden"></button>
-          </div>
-          <div class="separator"></div>
-          <div class="window-pane project-pane">
-            <div class="project-readme" data-readme>Loading…</div>
-            <hr>
-            <p class="project-stats" data-stats></p>
-            <a class="btn" data-repo-link target="_blank" rel="noopener">View Source</a>
-          </div>
-        </div>
-
-        <div class="window floating-window project-window" id="proj-rob" data-repo="rob" hidden>
-          <div class="title-bar">
-            <button aria-label="Close" class="close" data-close-window></button>
-            <h1 class="title">rob</h1>
-            <button aria-label="Resize" disabled class="hidden"></button>
-          </div>
-          <div class="separator"></div>
-          <div class="window-pane project-pane">
-            <div class="project-readme" data-readme>Loading…</div>
-            <hr>
-            <p class="project-stats" data-stats></p>
-            <a class="btn" data-repo-link target="_blank" rel="noopener">View Source</a>
-          </div>
-        </div>
-
-        <div class="window floating-window project-window" id="proj-rob-docs" data-repo="rob-docs-and-terms" hidden>
-          <div class="title-bar">
-            <button aria-label="Close" class="close" data-close-window></button>
-            <h1 class="title">rob-docs-and-terms</h1>
-            <button aria-label="Resize" disabled class="hidden"></button>
-          </div>
-          <div class="separator"></div>
-          <div class="window-pane project-pane">
-            <div class="project-readme" data-readme>Loading…</div>
-            <hr>
-            <p class="project-stats" data-stats></p>
-            <a class="btn" data-repo-link target="_blank" rel="noopener">View Source</a>
-          </div>
-        </div>
-
-        <!-- Activity Monitor: live GitHub vitals -->
-        <div class="window floating-window activity-window" id="activity-window" hidden>
-          <div class="title-bar">
-            <button aria-label="Close" class="close" data-close-window></button>
-            <h1 class="title">Activity Monitor</h1>
-            <button aria-label="Resize" disabled class="hidden"></button>
-          </div>
-          <div class="separator"></div>
-          <div class="window-pane activity-pane">
-            <p class="activity-summary" data-activity-summary>Reading GitHub…</p>
-            <hr>
-            <h2 class="activity-heading">Recent Activity</h2>
-            <ul class="activity-feed" data-activity-feed></ul>
-            <h2 class="activity-heading">Languages Loaded</h2>
-            <div class="activity-langs" data-activity-langs></div>
-            <hr>
-            <a class="btn" href="https://github.com/foolishbuilder" target="_blank" rel="noopener">Open GitHub</a>
-          </div>
-        </div>
-
       </div>
-    </main>
+    </div>
+  </section>
 
-    <script type="module" src="/src/main.js"></script>
-  </body>
+  <!-- ═══════ FOOTER ═══════ -->
+  <footer class="footer">
+    <div class="footer__links">
+      <a href="https://github.com/foolishbuilder" target="_blank" rel="noopener" class="footer__link reveal">
+        <i class="fab fa-github" aria-hidden="true"></i> GitHub
+      </a>
+    </div>
+    <p class="footer__copy reveal reveal-d1">&copy; 2026 Pat Faint</p>
+    <p class="footer__tagline reveal reveal-d2">Built by hand, one commit at a time <span>&#x1f6e0;&#xfe0f;</span></p>
+  </footer>
+
+  <script>
+  (function() {
+    'use strict';
+
+    var EXCLUDE = ['foolishbuilder-dev'];
+    var REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var LANG_COLORS = {
+      JavaScript:'#f1e05a',TypeScript:'#3178c6',Python:'#3572a5',HTML:'#e34c26',
+      CSS:'#563d7c',Shell:'#89e051',Go:'#00add8',Rust:'#dea584',Ruby:'#701516',
+      Java:'#b07219',PHP:'#4f5d95',Vue:'#41b883',Svelte:'#ff3e00','C#':'#178600',
+      Dart:'#00b4ab',Kotlin:'#A97BFF',Swift:'#F05138','C++':'#f34b7d',C:'#555555',
+      Lua:'#000080',PowerShell:'#012456',SCSS:'#c6538c',Astro:'#ff5a03',
+      Dockerfile:'#384d54',Makefile:'#427819',Nix:'#7e7eff',Haskell:'#5e5086'
+    };
+
+    var EMOJIS = ['\\u{1f4e6}','\\u{1f680}','\\u{1f527}','\\u2728','\\u{1f3af}','\\u{1f4a1}','\\u{1f9e9}','\\u{1f3a8}','\\u26a1','\\u{1f331}','\\u{1f52c}','\\u{1f6e0}\\ufe0f','\\u{1f916}','\\u{1f525}','\\u{1f30d}'];
+
+    function getLangColor(l) { return LANG_COLORS[l] || '#c084fc'; }
+
+    function timeAgo(iso) {
+      var s = Math.floor((Date.now() - new Date(iso)) / 1000);
+      if (s < 60) return 'just now';
+      var m = Math.floor(s / 60); if (m < 60) return m + 'm ago';
+      var h = Math.floor(m / 60); if (h < 24) return h + 'h ago';
+      var d = Math.floor(h / 24); if (d < 30) return d + 'd ago';
+      var mo = Math.floor(d / 30); if (mo < 12) return mo + 'mo ago';
+      return Math.floor(mo / 12) + 'y ago';
+    }
+
+    function pickEmoji(name) {
+      var hash = 0;
+      for (var i = 0; i < name.length; i++) hash = ((hash << 5) - hash) + name.charCodeAt(i);
+      return EMOJIS[Math.abs(hash) % EMOJIS.length];
+    }
+
+    /* ── Scroll Reveal ── */
+    function initReveal() {
+      var els = document.querySelectorAll('.reveal:not(.visible)');
+      if (REDUCE_MOTION) {
+        els.forEach(function(el) { el.classList.add('visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+      els.forEach(function(el) { observer.observe(el); });
+    }
+
+    /* ── Fetch Projects ── */
+    async function fetchProjects() {
+      var grid = document.getElementById('projects-grid');
+      if (!grid) return;
+
+      var repos = null;
+
+      try {
+        var res = await fetch('/api/repos');
+        if (res.ok) repos = await res.json();
+      } catch (e) { /* fallback below */ }
+
+      if (!repos) {
+        try {
+          var res2 = await fetch('https://api.github.com/users/foolishbuilder/repos?sort=pushed&per_page=100&type=owner');
+          if (res2.ok) repos = await res2.json();
+        } catch (e2) { /* give up */ }
+      }
+
+      if (!repos) {
+        grid.innerHTML = '<div class="empty-state"><div class="empty-state__emoji'>\\u{1f605}</div><p class="empty-state__text">Couldn\\u2019t load projects right now. Try refreshing!</p></div>';
+        return;
+      }
+
+      var filtered = repos.filter(function(r) {
+        return !r.private && !r.fork && !r.archived && EXCLUDE.indexOf(r.name) === -1;
+      });
+      filtered.sort(function(a, b) { return new Date(b.pushed_at) - new Date(a.pushed_at); });
+
+      if (!filtered.length) {
+        grid.innerHTML = '<div class="empty-state"><div class="empty-state__emoji'>\\u{1f3d7}\\ufe0f</div><p class="empty-state__text">No public projects yet. Check back soon!</p></div>';
+        return;
+      }
+
+      var html = '';
+      filtered.forEach(function(repo, idx) {
+        var langHtml = '';
+        if (repo.language) {
+          langHtml = '<span class="project-card__lang"><span class="project-card__dot" style="background:' + getLangColor(repo.language) + '"></span>' + repo.language + '</span>';
+        }
+        var starsHtml = '';
+        if (repo.stargazers_count > 0) {
+          starsHtml = '<span class="project-card__stars"><i class="fas fa-star" aria-hidden="true"></i> ' + repo.stargazers_count + '</span>';
+        }
+        var delay = 'reveal reveal-d' + ((idx % 5) + 1);
+
+        html += '<a href="' + repo.html_url + '" target="_blank" rel="noopener" class="project-card ' + delay + '">' +
+          '<div class="project-card__content">' +
+          '<span class="project-card__emoji" aria-hidden="true">' + pickEmoji(repo.name) + '</span>' +
+          '<h3 class="project-card__name">' + repo.name + '</h3>' +
+          '<p class="project-card__desc">' + (repo.description || 'No description yet.') + '</p>' +
+          '<div class="project-card__meta">' + langHtml + starsHtml +
+          '<span class="project-card__time">' + timeAgo(repo.pushed_at) + '</span>' +
+          '<i class="fas fa-arrow-right project-card__arrow" aria-hidden="true"></i>' +
+          '</div></div></a>';
+      });
+      grid.innerHTML = html;
+      initReveal();
+    }
+
+    /* ── Init ── */
+    document.addEventListener('DOMContentLoaded', function() {
+      initReveal();
+      fetchProjects();
+    });
+  })();
+  </script>
+</body>
 </html>

@@ -2,6 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "foolishbuilder-dev",
   "compatibility_date": "2026-07-02",
+  "main": "src/worker.js",
   "observability": {
     "enabled": true
   },
