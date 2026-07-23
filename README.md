@@ -10,13 +10,15 @@ Built with Vite + Cloudflare Workers.
 npm install
 ```
 
-## Add GitHub PAT (server-side only — never exposed to browser)
+## Add GitHub PAT (server-side only)
 
 ```bash
 wrangler secret put GITHUB_PAT
 ```
 
 Paste your token when prompted. Recommended scope: `public_repo`.
+
+The token is stored as a Cloudflare Worker secret and is NEVER exposed to the browser.
 
 ## Development
 
@@ -33,7 +35,5 @@ npm run deploy
 ## Architecture
 
 - `index.html` — self-contained frontend (all CSS/JS inline)
-- `src/worker.js` — Cloudflare Worker that proxies GitHub API requests
-  using your PAT for higher rate limits. The token never reaches the browser.
-- Repos named `foolishbuilder-dev`, forks, archived, and private repos
-  are filtered out client-side.
+- `src/worker.js` — Cloudflare Worker proxy for GitHub API (uses PAT for rate limits)
+- Repos named `foolishbuilder-dev`, forks, archived, and private repos are filtered out client-side
